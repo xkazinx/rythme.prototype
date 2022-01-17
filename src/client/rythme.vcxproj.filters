@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="app">
+      <UniqueIdentifier>{a2ae25f5-a17b-415a-881e-c427a1c9a0fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="app\ph">
+      <UniqueIdentifier>{23f1edb3-f2e9-461b-b454-d9b1a3ccf4e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene">
+      <UniqueIdentifier>{783ef24e-6021-4844-a61c-f03287a1a544}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\ui">
+      <UniqueIdentifier>{9de2342f-b339-443b-8819-8492688b0b98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\ui\imgui">
+      <UniqueIdentifier>{07da5235-452b-4fa6-b2c4-c2f7e0a89a4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\base">
+      <UniqueIdentifier>{4bba9400-cd4f-424a-a41d-e6f6554ff8b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\main">
+      <UniqueIdentifier>{2065043a-04f5-492b-8c30-e7844f924648}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scene\command">
+      <UniqueIdentifier>{8092a4fe-af8a-42c6-960e-ffe8b278eb2a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="App.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>app\ph</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>app\ph</Filter>
+    </ClInclude>
+    <ClInclude Include="Global.h">
+      <Filter>app</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imconfig.h">
+      <Filter>scene\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui.h">
+      <Filter>scene\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui_internal.h">
+      <Filter>scene\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui-SFML.h">
+      <Filter>scene\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_rectpack.h">
+      <Filter>scene\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_textedit.h">
+      <Filter>scene\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imstb_truetype.h">
+      <Filter>scene\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="imgui\imgui-SFML_export.h">
+      <Filter>scene\ui\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>scene\main</Filter>
+    </ClInclude>
+    <ClInclude Include="random.h" />
+    <ClInclude Include="console\log.h" />
+    <ClInclude Include="console\rang.hpp" />
+    <ClInclude Include="Scene.h">
+      <Filter>scene\base</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneMgr.h">
+      <Filter>scene\base</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandBase.h">
+      <Filter>scene\command</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandMgr.h">
+      <Filter>scene\command</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="App.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>app\ph</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="Global.cpp">
+      <Filter>app</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui.cpp">
+      <Filter>scene\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_demo.cpp">
+      <Filter>scene\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_draw.cpp">
+      <Filter>scene\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_tables.cpp">
+      <Filter>scene\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui_widgets.cpp">
+      <Filter>scene\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imgui\imgui-SFML.cpp">
+      <Filter>scene\ui\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>scene\main</Filter>
+    </ClCompile>
+    <ClCompile Include="random.cpp" />
+    <ClCompile Include="console\log.cpp" />
+    <ClCompile Include="Scene.cpp">
+      <Filter>scene\base</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneMgr.cpp">
+      <Filter>scene\base</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandBase.cpp">
+      <Filter>scene\command</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandMgr.cpp">
+      <Filter>scene\command</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="notes.txt" />
+  </ItemGroup>
+</Project>
