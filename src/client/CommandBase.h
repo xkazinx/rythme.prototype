@@ -117,7 +117,7 @@ public:
 	{
 		if (!Exists(starting_idx))
 		{
-			Log::Error("GetText: if (!Exists(starting_idx))");
+			PrintError("GetText: if (!Exists(starting_idx))");
 			return "";
 		}
 		string text;
@@ -135,7 +135,7 @@ public:
 	{
 		if (!Exists(idx))
 		{
-			Log::Error("GetValue: if (!Exists(idx))");
+			PrintError("GetValue: if (!Exists(idx))");
 			return 0;
 		}
 
@@ -174,7 +174,7 @@ public:
 	{
 		if (!CanFetch())
 		{
-			Log::Error("Fetch: if (!CanFetch())");
+			PrintError("Fetch: if (!CanFetch())");
 			return false;
 		}
 
@@ -261,7 +261,7 @@ public:
 
 			if (!Handle())
 			{
-				Log::Error("Command {} exists but couldn't be processed due to restrictions or invalid arguments",
+				PrintError("Command {} exists but couldn't be processed due to restrictions or invalid arguments",
 				           identifier);
 			}
 

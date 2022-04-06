@@ -1,13 +1,12 @@
 #pragma once
 
-class App final
+class App final : kazin::app::Base
 {
 public:
 	App();
-	~App();
+	~App() override;
 
 	RenderWindow _window{};
-	HMODULE      _livePP;
 
 	int  Tick();
 	bool HandleEvents();

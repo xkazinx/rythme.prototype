@@ -1,0 +1,9 @@
+/src/client/Debug
+/src/client/Release
+
+/deploy/client
+
+/.vs
+src/.vs/
+
+*.vcxproj.user

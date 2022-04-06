@@ -47,7 +47,7 @@ public:
 		{/*
 			if (!_pressed)
 			{
-				Log::Error("Trying to Release a non-pressed Button: {}", _idx);
+				PrintError("Trying to Release a non-pressed Button: {}", _idx);
 				return;
 			}
 			*/

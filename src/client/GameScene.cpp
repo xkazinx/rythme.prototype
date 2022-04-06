@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "GameScene.h"
 #include "App.h"
 #include "CommandMgr.h"
@@ -70,7 +70,7 @@ bool GameScene::ProcessCommand()
 	const auto cmd = CommandMgr::Process(_command);
 	const auto res = cmd != nullptr;
 
-	Log::Debug("Process command \"{}\": {}", _command.c_str(), 
+	PrintDebug("Process command \"{}\": {}", _command.c_str(), 
 		Format(res, FormatType::bool_State) // #todo Why doesn't _command.c_str() work as argument?
 	);
 
@@ -94,7 +94,7 @@ void GameScene::Render([[maybe_unused]] sf::RenderTarget& tgt, [[maybe_unused]] 
 
 void GameScene::PressButton(ButtonIdx idx, bool press)
 {
-	Log::Debug("Pressed {} press {}", idx, press);
+	PrintDebug("Pressed {} press {}", idx, press);
 	if (press)
 		_btn[idx].Press();
 	else _btn[idx].Release();
@@ -124,7 +124,7 @@ bool GameScene::HandleEvent(const sf::Event& ev)
 			return true;
 		}
 	}
-
+	
 	return false;
 }
 

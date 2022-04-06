@@ -9,7 +9,6 @@ namespace Global
 	constexpr char kAppName[] = "Rythme";
 
 	extern App* g_app;
-	extern unique_ptr<Random> g_rand;
 	extern unique_ptr<SceneMgr> g_scene;
 	extern unique_ptr<CommandMgr> g_cmd;
 	extern u16 g_res_x, g_res_y;

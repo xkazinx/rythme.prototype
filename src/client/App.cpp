@@ -1,4 +1,5 @@
-#include "stdafx.h"
+#include "pch.h"
+
 // Self
 #include "App.h"
 #include "SceneMgr.h"
@@ -20,10 +21,8 @@ void lppPostPatch()
 LPP_PREPATCH_HOOK(lppPrePatch);
 LPP_POSTPATCH_HOOK(lppPostPatch);
 
-App::App() // NOLINT(cppcoreguidelines-pro-type-member-init)
+App::App() : kazin::app::Base("Rythme")
 {
-	_livePP = lpp::lppLoadAndRegister(L"D:\\LIBPATH\\LivePP", "Kazimgr");
-	lpp::lppEnableAllCallingModulesAsync(_livePP);
 
 	g_app = this;
 	Global::Initialize();
@@ -37,9 +36,6 @@ App::~App() // NOLINT(modernize-use-equals-default)
 {
 	ImGui::SFML::Shutdown();
 	Global::Deinitialize();
-
-	lpp::lppShutdown(_livePP);
-	::FreeLibrary(_livePP);
 }
 
 void App::ToggleConsole()
@@ -101,7 +97,7 @@ int App::Tick()
 		{
 			if(!HandleEvents())
 			{
-				Log::Debug("if (!HandleEvents())");
+				PrintDebug("if (!HandleEvents())");
 				break;
 			}
 		}
