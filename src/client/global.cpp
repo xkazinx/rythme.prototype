@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Global.h"
+#include "global.h"
 #include "SceneMgr.h"
 #include "CommandMgr.h"
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Every project under src\ (rythme, kazilib) builds with the 64-bit-hosted compiler, linker
+  and librarian (bin\HostX64\x86) and produces x86 (Win32) exes and libs.
+
+  KaziVersion: kazilib (src\dep\kazilib\kazilib.vcxproj) builds its ml version, which needs
+  only SFML's headers (src\dep\SFML-3.1.0, setup.ps1), as tictactoe does.
+-->
+<Project>
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <KaziVersion>ml</KaziVersion>
+    <KaziDep>$(MSBuildThisFileDirectory)dep\</KaziDep>
+    <RythmeSfml>$(KaziDep)SFML-3.1.0\</RythmeSfml>
+    <RythmeKazilib>$(KaziDep)kazilib\</RythmeKazilib>
+  </PropertyGroup>
+</Project>

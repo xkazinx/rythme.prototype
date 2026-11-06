@@ -1,21 +1,21 @@
 #pragma once
-#include "Scene.h"
 
-class GameScene : public Scene
+class GameScene : public lib::scene::Base
 {
 public:
 	GameScene();
-	~GameScene();
+	~GameScene() override;
 	void OnHotpatch();
 
 	static constexpr auto kID = SceneID::Game;
 
 	void Tick() override;
-	
-	void Render(sf::RenderTarget& tgt, const sf::RenderStates& states) const override;
-	void PressButton(ButtonIdx idx, bool press);
-	bool HandleEvent(const sf::Event& ev) override;
-	void ProcessUI() override;
+
+	void Render() override;
+	void PressButton(const ButtonIdx idx, const bool press);
+	// ev: the sf::Event the window delivered (lib::scene::Base passes it as void *)
+	void HandleEvent(const void * ev) override;
+	void ProcessUI();
 
 	bool ProcessCommand();
 	string _command;
@@ -60,4 +60,7 @@ public:
 	};
 
 	array<Button, kButtonMax> _btn;
+
+private:
+	bool HandleKey(const sf::Event & ev);
 };

@@ -1,0 +1,7 @@
+{
+  "projects": [
+    { "vcxproj": "dep/kazilib/kazilib.vcxproj", "alias": "kazilib" },
+    { "vcxproj": "client/rythme.vcxproj", "alias": "rythme" }
+  ],
+  "workers": [ "192.168.0.204" ]
+}

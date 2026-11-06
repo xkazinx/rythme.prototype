@@ -1,9 +1,16 @@
-/src/client/Debug
-/src/client/Release
-
-/deploy/client
-
+# SFML 3.1 SDK (setup.ps1: a junction to D:\code\kazilib\SFML-3.1.0, or downloaded)
+/src/dep/SFML-3.1.0
+# Intermediates
+/src/build/
+/src/.vs/
 /.vs
-src/.vs/
-
-*.vcxproj.user
+*.user
+# Build output (the exe, its pdb and SFML's DLLs, next to imgui.ini)
+/deploy/rythme/*.exe
+/deploy/rythme/*.dll
+/deploy/rythme/*.pdb
+/deploy/rythme/*.exp
+/deploy/rythme/*.lib
+/deploy/rythme/*.old*
+# Web build, upload stage and test shots
+/testerino/

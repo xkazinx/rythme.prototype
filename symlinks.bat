@@ -1,8 +1,0 @@
-mklink %0\..\deploy\client\openal32.dll "%LIBPATH%\SFML-2.5.1\bin\openal32.dll"
-mklink %0\..\deploy\client\sfml-graphics-2.dll "%LIBPATH%\SFML-2.5.1\bin\sfml-graphics-2.dll"
-mklink %0\..\deploy\client\sfml-graphics-d-2.dll "%LIBPATH%\SFML-2.5.1\bin\sfml-graphics-d-2.dll"
-mklink %0\..\deploy\client\sfml-system-2.dll "%LIBPATH%\SFML-2.5.1\bin\sfml-system-2.dll"
-mklink %0\..\deploy\client\sfml-system-d-2.dll "%LIBPATH%\SFML-2.5.1\bin\sfml-system-d-2.dll"
-mklink %0\..\deploy\client\sfml-window-2.dll "%LIBPATH%\SFML-2.5.1\bin\sfml-window-2.dll"
-mklink %0\..\deploy\client\sfml-window-d-2.dll "%LIBPATH%\SFML-2.5.1\bin\sfml-window-d-2.dll"
-pause

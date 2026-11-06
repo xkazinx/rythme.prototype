@@ -5,26 +5,16 @@
 #include "SceneMgr.h"
 #include "CommandMgr.h"
 
-// Lib
-#include <LPP_API.h>
+#ifdef __EMSCRIPTEN__
+#include <emscripten.h>
+#endif
 
-void lppPrePatch()
+App::App()
 {
-}
-
-void lppPostPatch()
-{
-	Print("LivePP: Patch");
-	g_cmd->Setup();
-}
-
-LPP_PREPATCH_HOOK(lppPrePatch);
-LPP_POSTPATCH_HOOK(lppPostPatch);
-
-App::App() : kazin::app::Base("Rythme")
-{
-
 	g_app = this;
+#ifndef __EMSCRIPTEN__
+	SetConsoleTitleA(kAppName);
+#endif
 	Global::Initialize();
 
 	InitializeWindow(g_res_x, g_res_y);
@@ -32,7 +22,7 @@ App::App() : kazin::app::Base("Rythme")
 	ImGui::SFML::Init(_window);
 }
 
-App::~App() // NOLINT(modernize-use-equals-default)
+App::~App()
 {
 	ImGui::SFML::Shutdown();
 	Global::Deinitialize();
@@ -40,6 +30,7 @@ App::~App() // NOLINT(modernize-use-equals-default)
 
 void App::ToggleConsole()
 {
+#ifndef __EMSCRIPTEN__
 	const HWND hwnd  = GetConsoleWindow();
 	int        state = SW_SHOW;
 
@@ -50,16 +41,24 @@ void App::ToggleConsole()
 
 	//if(state == SW_SHOW)
 		//RequestFocus(hwnd);
+#endif
 }
 
-void App::InitializeWindow([[maybe_unused]] const u16 res_x, [[maybe_unused]] u16 res_y)
+void App::InitializeWindow([[maybe_unused]] const u16 res_x, [[maybe_unused]] const u16 res_y)
 {
+#ifdef __EMSCRIPTEN__
+	// The page sizes the canvas (kazilib web/shell.html) and the browser paces the frames:
+	// display() waits for its next one. The controls go under the game, on the page.
+	_window.create(VideoMode({g_res_x, g_res_y}), kAppName, sf::Style::Titlebar | sf::Style::Close);
+	emscripten_run_script("document.getElementById('bar').insertAdjacentHTML('beforeend', '<span id=\"hint\">Hold 1 to 9 and 0: light the frets.</span>')");
+	Print("Game ready: {} frets", kButtonMax);
+#else
 	// OpenGL settings
 	ContextSettings settings;
 	{
 		settings.depthBits         = 0;
 		settings.stencilBits       = 0;
-		settings.antialiasingLevel = 0;
+		settings.antiAliasingLevel = 0;
 		settings.majorVersion      = 3;
 		settings.minorVersion      = 2;
 	}
@@ -68,28 +67,30 @@ void App::InitializeWindow([[maybe_unused]] const u16 res_x, [[maybe_unused]] u1
 		first || _window.getSize().x != g_res_x)
 	{
 		first = false;
-		_window.create(VideoMode(g_res_x, g_res_y), kAppName, sf::Style::None, settings);
+		_window.create(VideoMode({g_res_x, g_res_y}), kAppName, sf::Style::None, sf::State::Windowed, settings);
 	}
 
 	_window.setVisible(res_x != 0);
 
-	// https://www.sfml-dev.org/tutorials/2.5/window-opengl.php
-	_window.setActive(res_x != 0);
+	// https://www.sfml-dev.org/tutorials/3.0/window/opengl/
+	(void)_window.setActive(res_x != 0);
 	_window.setVerticalSyncEnabled(false); //res_x != 0);
 	_window.setFramerateLimit(60);
 
 	AdjustViewport(_window.getSize().x, _window.getSize().y);
+#endif
 }
 
-void App::AdjustViewport(const GLsizei & x, const GLsizei & y)
+#ifndef __EMSCRIPTEN__
+void App::AdjustViewport(const GLsizei x, const GLsizei y)
 {
 	glViewport(0, 0, x, y);
 }
+#endif
 
 int App::Tick()
 {
-	sf::RenderStates states;
-	sf::Clock        delta_clock;
+	sf::Clock delta_clock;
 
 	while(_window.isOpen())
 	{
@@ -112,13 +113,15 @@ int App::Tick()
 		{
 			_window.clear(sf::Color::Black);
 			{
-				g_scene->Render(_window, states);
+				g_scene->Render();
 				ImGui::SFML::Render(_window);
 			}
 			_window.display();
 		}
 
-		this_thread::sleep_for(std::chrono::milliseconds(1));
+#ifndef __EMSCRIPTEN__
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+#endif
 	}
 
 	return 0;
@@ -126,25 +129,25 @@ int App::Tick()
 
 bool App::HandleEvents()
 {
-	sf::Event ev;
-
-	while(_window.pollEvent(ev))
+	while(const std::optional ev = _window.pollEvent())
 	{
-		ImGui::SFML::ProcessEvent(ev);
+		ImGui::SFML::ProcessEvent(*ev);
 
-		if(ev.type == sf::Event::Closed)
+		if(ev->is<sf::Event::Closed>())
 		{
 			_window.close();
 			return false;
 		}
 
-		if(ev.type == sf::Event::Resized)
+#ifndef __EMSCRIPTEN__
+		if(const auto * const resized = ev->getIf<sf::Event::Resized>())
 		{
-			AdjustViewport(ev.size.width, ev.size.height);
+			AdjustViewport(resized->size.x, resized->size.y);
 		}
 		else
+#endif
 		{
-			g_scene->HandleEvent(ev);
+			g_scene->HandleEvent(&*ev);
 		}
 	}
 

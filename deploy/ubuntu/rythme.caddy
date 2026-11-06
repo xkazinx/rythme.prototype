@@ -1,0 +1,12 @@
+# rythme (github.com/xkazinx/rythme.prototype) at kazin.dev/projects/rythme: the web build, static (no
+# server). Written by deploy/ubuntu/install.sh. Imported inside the kazin.dev site
+# block (`import /etc/caddy/sites/kazin.dev.d/*.caddy`).
+redir /projects/rythme /projects/rythme/ permanent
+
+# The web build, with the prefix taken off; revalidated each visit (a new build
+# keeps its names)
+handle_path /projects/rythme/* {
+	root * /opt/rythme/web
+	header Cache-Control "no-cache"
+	file_server
+}

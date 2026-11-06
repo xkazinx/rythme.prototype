@@ -24,7 +24,7 @@ void GameScene::OnHotpatch()
 	_board.setSize({g_res_x - (g_res_x / 4.f), (float)g_res_y });
 	auto sz = _board.getSize();
 
-	_board.setPosition((g_res_x / 2.f) - (sz.x / 2.f), 0.f);
+	_board.setPosition({(g_res_x / 2.f) - (sz.x / 2.f), 0.f});
 
 	auto pos = _board.getPosition();
 	for(szt i = 0; i < _btn.size(); ++i)
@@ -42,7 +42,7 @@ void GameScene::OnHotpatch()
 		auto r = b._shape.getRadius() + tick;
 		auto r2 = r * 2.f;
 
-		b._shape.setPosition(pos.x + (r2 * idx), g_res_y - r2);
+		b._shape.setPosition({pos.x + (r2 * idx), g_res_y - r2});
 	}
 }
 
@@ -82,49 +82,62 @@ bool GameScene::ProcessCommand()
 	return res;
 }
 
-void GameScene::Render([[maybe_unused]] sf::RenderTarget& tgt, [[maybe_unused]] const sf::RenderStates& states) const
+void GameScene::Render()
 {
-	tgt.draw(_board, states);
+	auto & tgt = g_app->_window;
+	tgt.draw(_board);
 
 	for(const auto & btn : _btn)
 	{
-		tgt.draw(btn._shape, states);
+		tgt.draw(btn._shape);
 	}
+
+	ProcessUI();
 }
 
-void GameScene::PressButton(ButtonIdx idx, bool press)
+void GameScene::PressButton(const ButtonIdx idx, const bool press)
 {
-	PrintDebug("Pressed {} press {}", idx, press);
+	PrintDebug("Pressed {} press {}", static_cast<unsigned>(idx), press);
 	if (press)
 		_btn[idx].Press();
 	else _btn[idx].Release();
 }
 
-bool GameScene::HandleEvent(const sf::Event& ev)
+void GameScene::HandleEvent(const void * const ev)
 {
-	if (ev.type == sf::Event::KeyPressed)
+	if (ev)
+		HandleKey(*static_cast<const sf::Event *>(ev));
+}
+
+bool GameScene::HandleKey(const sf::Event & ev)
+{
+	const auto * const pressed  = ev.getIf<sf::Event::KeyPressed>();
+	const auto * const released = ev.getIf<sf::Event::KeyReleased>();
+
+	if (pressed)
 	{
-		if (ev.key.code == Key::Escape)
+		if (pressed->code == Key::Escape)
 		{
 
 			return true;
 		}
-		else if (ev.key.code == Key::D && sf::Keyboard::isKeyPressed(Key::RAlt))
+		else if (pressed->code == Key::D && sf::Keyboard::isKeyPressed(Key::RAlt))
 		{
 			g_app->ToggleConsole();
 			return true;
 		}
 	}
 
-	if (ev.type == sf::Event::KeyPressed || ev.type == sf::Event::KeyReleased)
+	if (pressed || released)
 	{
-		if (ev.key.code >= Key::Num0 && ev.key.code <= Key::Num9)
+		const Key code = pressed ? pressed->code : released->code;
+		if (code >= Key::Num0 && code <= Key::Num9)
 		{
-			PressButton(ButtonIdx(ev.key.code == Key::Num0 ? 9 : ev.key.code - Key::Num0 - 1), ev.type == sf::Event::KeyPressed);
+			PressButton(ButtonIdx(code == Key::Num0 ? 9 : Under(code) - Under(Key::Num0) - 1), pressed != nullptr);
 			return true;
 		}
 	}
-	
+
 	return false;
 }
 

@@ -1,19 +1,16 @@
 #pragma once
+#include "GameScene.h"
 
-class Scene;
-
-class SceneMgr final
+// The scenes, on kazilib's scene manager (lib::scene::Manager): one object per scene, Set enters it.
+class SceneMgr final : public lib::scene::Manager
 {
 public:
 	using ID = SceneID;
 
 	SceneMgr();
 	~SceneMgr();
-	
-	unique_ptr<Scene> _ptr;
+
+	GameScene _game;
 
 	void Set(ID id);
-	void Render(sf::RenderTarget& tgt, const sf::RenderStates& states) const;
-	void Tick();
-	bool HandleEvent(const sf::Event& ev) const;
 };

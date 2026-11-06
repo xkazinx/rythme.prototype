@@ -20,6 +20,25 @@ namespace Global
 
 	extern void Initialize();
 	extern void Deinitialize();
+
+	// Console lines (the old kazin library's Print / PrintDebug / PrintError): std::format, coloured with rang
+	template<typename... Args>
+	void Print(const std::format_string<Args...> fmt, Args &&... args)
+	{
+		std::cout << std::format(fmt, std::forward<Args>(args)...) << '\n';
+	}
+
+	template<typename... Args>
+	void PrintDebug(const std::format_string<Args...> fmt, Args &&... args)
+	{
+		std::cout << rang::fg::gray << std::format(fmt, std::forward<Args>(args)...) << rang::style::reset << '\n';
+	}
+
+	template<typename... Args>
+	void PrintError(const std::format_string<Args...> fmt, Args &&... args)
+	{
+		std::cout << rang::fg::red << std::format(fmt, std::forward<Args>(args)...) << rang::style::reset << '\n';
+	}
 	
 	class Guard
 	{
@@ -33,7 +52,7 @@ namespace Global
 			_reset();
 		}
 
-		std::function<void()> _reset;
+		function<void()> _reset;
 	};
 
 	namespace scene
@@ -58,21 +77,21 @@ namespace Global
 	template<typename T>
 	inline string Format(T v, FormatType type = FormatType::None)
 	{
-		if constexpr (is_enum_v<T>)
+		if constexpr (std::is_enum_v<T>)
 		{
-			return format("({}:{})", to_underlying(v), enum_name(v));
+			return std::format("({}:{})", Under(v), magic_enum::enum_name(v));
 		}
 		else if constexpr (is_same_v<bool, T>)
 		{
 			using enum FormatType;
 			switch (type)
 			{
-			case bool_Switch:			return format("{}", v ? "On" : "Off");
-			case bool_State:			return format("{}", v ? "True" : "False");
-			case bool_Status:			return format("{}", v ? "Enabled" : "Disabled");
-			case bool_Result:			return format("{}", v ? "Success" : "Failure");
-			case bool_Affirmation:	return format("{}", v ? "Yes" : "No");
-			default:						return format("{}", v);
+			case bool_Switch:			return v ? "On" : "Off";
+			case bool_State:			return v ? "True" : "False";
+			case bool_Status:			return v ? "Enabled" : "Disabled";
+			case bool_Result:			return v ? "Success" : "Failure";
+			case bool_Affirmation:	return v ? "Yes" : "No";
+			default:						return std::format("{}", v);
 			}
 		}
 		else
@@ -88,7 +107,7 @@ namespace font {
 		Max,
 	};
 
-	using FontNames = const vector<string>;
+	using FontNames = const array<string_view, 1>;
 	extern FontNames kNames;
 }
 

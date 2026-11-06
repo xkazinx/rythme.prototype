@@ -101,9 +101,9 @@ public:
 		: _text(text), _parser(text.c_str())
 	{
 		auto param = _parser.Get();
-		while (param = _parser.Get())
+		while ((param = _parser.Get()))
 		{
-			_data.push_back(param);
+			_data += param;
 		}
 	}
 
@@ -140,7 +140,7 @@ public:
 		}
 
 		const auto & str = _data[idx];
-		if (!ranges::all_of(str, isdigit))
+		if (!std::ranges::all_of(str, isdigit))
 		{
 			if (str.size() <= 1 || str[0] != '-' || !std::all_of(str.begin() + 1, str.end(), isdigit))
 				return 0;
@@ -237,7 +237,7 @@ class MgrBase
 public:
 	using Cmd = Command<Mgr>;
 
-	virtual ~MgrBase<Mgr>() = default;
+	virtual ~MgrBase() = default;
 
 	// Returns whether the command was ran successfully
 	virtual bool Handle() = 0;
@@ -254,7 +254,7 @@ public:
 			(first_space == string::npos ? text.size() : first_space)
 		);
 		
-		if (const auto it = find(_list.begin(), _list.end(), identifier);
+		if (const auto it = std::find(_list.begin(), _list.end(), identifier);
 			it != _list.end())
 		{
 			_current = make_unique<Current<Mgr>>(*it, text);
@@ -276,12 +276,12 @@ public:
 protected:
 	void SetAlias(const string & source, const string & target)
 	{
-		if (const auto it = find(_list.begin(), _list.end(), source);
+		if (const auto it = std::find(_list.begin(), _list.end(), source);
 			it != _list.end())
 		{
 			auto cmd_copy        = *it;
 			cmd_copy._identifier = target;
-			_list.push_back(cmd_copy);
+			_list += cmd_copy;
 		}
 	}
 
