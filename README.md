@@ -3,6 +3,8 @@
 A rhythm game prototype (2022): a board with ten frets at its bottom, lit while the number keys 1..9, 0 are held.
 SFML 3.1 and ImGui through [kazilib](https://github.com/xkazinx/kazilib) (submodule `src/dep/kazilib`).
 
+**Made without AI** until the first Claude commit (e2cba70, 2026-11-06); AI was used after that for the updated deployment and this README.
+
 **Play it in your browser: https://kazin.dev/projects/rythme/**
 
 ![The board with three frets held: their outlines turn yellow](docs/screenshot.png)
